@@ -9,17 +9,11 @@
 {literal}
 <script>
 	$(function() {
-		$( "#wyborDatyStart" ).datetimepicker(
-				{
-					hourMin:{/literal} 0,
-		            hourMax: 24{literal}
-				}
+		$( "#wyborDatyStart" ).datepicker(
+				{}
 				);
-                $( "#wyborDatyStop" ).datetimepicker(
-				{
-					hourMin:{/literal} 0,
-		            hourMax: 24{literal}
-				}
+                $( "#wyborDatyStop" ).datepicker(
+				{}
 				);
 	});
 </script>
