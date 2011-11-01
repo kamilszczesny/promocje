@@ -1,0 +1,130 @@
+body{
+	background-color: #ebe6d8;
+}
+header{
+	float:left;
+	clear:both;
+}
+footer{
+	float:left;
+	clear:both;
+}
+.content{
+	float:left;
+	clear:both;
+}
+.restaurant{
+	width:620px;
+	float:left;
+	display:block;
+}
+.restaurant h1{
+	font-weight:normal;
+	font-size:20px;
+	font-family:Verdana;
+	line-height:24px;
+	font-weight:bold;
+}
+ul.restaurantDetails{
+	float:left;
+	display:block;
+	list-style-type:none;
+	padding-left:0px;
+}
+ul.restaurantDetails li{
+	font-weight:normal;
+	font-size:15px;
+	font-family:Georgia, Times;
+	line-height:20px;
+}
+ul.restaurantDetails li span{
+	font-weight:bold;
+	font-family:Verdana;
+	font-size:12px;
+}
+.restaurant img{
+	width:240px;
+	float:left;
+	margin:10px;
+	padding-right:10px;
+}
+.reservationForm{
+	width:334px;
+	height:380px;
+	float:left;
+	margin-left:20px;
+	display:block;
+	background-color: #ffba00;
+   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffb400), to(#ffde00));
+   background-image: -webkit-linear-gradient(top, #ffb400, #ffde00);
+   background-image:    -moz-linear-gradient(top, #ffb400, #ffde00);
+   background-image:     -ms-linear-gradient(top, #ffb400, #ffde00);
+   background-image:      -o-linear-gradient(top, #ffb400, #ffde00);
+   -moz-border-radius: 15px;
+ 	border-radius: 15px;
+ 	-moz-box-shadow: 2px 2px 10px #888;
+ -webkit-box-shadow: 2px 2px 10px #888;
+ box-shadow: 2px 2px 10px #888;
+}
+.reservationForm form{
+	padding:0 15px;
+}
+.reservationForm input,
+.reservationForm select{
+	padding: 5px;  
+    font-size: 15px;  
+    text-shadow: 0px 1px 0px #fff;  
+    outline: none;  
+    background: -webkit-gradient(linear, left top, left bottombottom, from(#bcbcbe), to(#ffffff));  
+    background: -moz-linear-gradient(top,  #bcbcbe,  #ffffff);  
+    -webkit-border-radius: 5px;  
+    -moz-border-radius: 5px;  
+    border-radius: 5px;  
+    border: 1px solid #976e00;  
+    -webkit-box-shadow: 1px 1px 0px #ffebb6;  
+    -moz-box-shadow: 1px 1px 0px #ffebb6;  
+    box-shadow:  1px 1px 0px #ffebb6;  
+}
+.reservationForm input:focus {  
+    -webkit-box-shadow: 0px 0px 5px red;  
+    -moz-box-shadow: 0px 0px 5px red;  
+    box-shadow: 0px 0px 5px red;  
+}
+.reservationForm h2{
+	font-family:Verdana;
+	color:white;
+	font-size:22px;
+	font-weight:bold;
+	width:318px;
+	display:block;
+	border-bottom:1px dotted white;
+	padding-left:15px;
+	padding-bottom:5px;
+}
+.reservationForm label{
+	font-size:14px;
+	font-family:Verdana;
+	color:brown;
+	margin:5px 0px;
+	display:block;
+}
+#body{
+	width:980px;
+	margin:20px auto;
+}
+.bodywrap{
+	width:980px;
+	background-color: #dcd4bf;
+	-webkit-border-radius: 20px;  
+    -moz-border-radius: 20px;  
+    border-radius: 20px;
+    padding:10px;
+    float:left;
+}
+.normalTop{
+	background: url("/test2//public/css/images/topNormal.jpg") no-repeat 0px 0px transparent;
+	width:1000px;
+	padding: 0px 0px;
+	margin:20px 0px 10px -10px;
+	height:200px;
+}

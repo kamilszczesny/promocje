@@ -1,0 +1,1 @@
+szablon akcji index --- phtml
