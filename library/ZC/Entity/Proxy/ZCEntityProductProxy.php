@@ -27,6 +27,42 @@ class ZCEntityProductProxy extends \ZC\Entity\Product implements \Doctrine\ORM\P
     }
 
     
+    public function getSizeString()
+    {
+        $this->_load();
+        return parent::getSizeString();
+    }
+
+    public function getPastPromotions()
+    {
+        $this->_load();
+        return parent::getPastPromotions();
+    }
+
+    public function getCurrentPromotions()
+    {
+        $this->_load();
+        return parent::getCurrentPromotions();
+    }
+
+    public function getFuturePromotions()
+    {
+        $this->_load();
+        return parent::getFuturePromotions();
+    }
+
+    public function getSmallestCurrentPrice()
+    {
+        $this->_load();
+        return parent::getSmallestCurrentPrice();
+    }
+
+    public function getPromotions()
+    {
+        $this->_load();
+        return parent::getPromotions();
+    }
+
     public function __get($property)
     {
         $this->_load();
@@ -42,6 +78,6 @@ class ZCEntityProductProxy extends \ZC\Entity\Product implements \Doctrine\ORM\P
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'sizeNetto', 'sizeBrutto', 'description', 'imageUrl', 'productagregat', 'promotions', 'sizeUnit');
+        return array('__isInitialized__', 'id', 'name', 'sizeNetto', 'sizeBrutto', 'description', 'imageUrl', 'image', 'productagregat', 'promotions', 'sizeUnit');
     }
 }

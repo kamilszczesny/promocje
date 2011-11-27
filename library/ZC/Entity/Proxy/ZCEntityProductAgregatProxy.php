@@ -42,6 +42,6 @@ class ZCEntityProductAgregatProxy extends \ZC\Entity\ProductAgregat implements \
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'description', 'ingredients', 'imageUrl', 'products');
+        return array('__isInitialized__', 'id', 'name', 'description', 'ingredients', 'imageUrl', 'image', 'category', 'products');
     }
 }

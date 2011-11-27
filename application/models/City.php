@@ -13,12 +13,7 @@ class Application_Model_City{
         function getAll(){
             
             $c = new ZC\Entity\City();
-            //print_r($c);
-            //echo('test');
-//            $this->em->persist($c);
-//            $this->em->flush();
-//            $city = $this->em->find('ZC\Entity\City');
-            $city = $this->em->createQuery('SELECT c FROM ZC\Entity\City c')
+            $city = $this->em->createQuery('SELECT c FROM ZC\Entity\City c ORDER BY c.name ASC')
                          ->getResult();
             return $city;
         }

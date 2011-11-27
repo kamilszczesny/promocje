@@ -32,8 +32,18 @@ class Shop {
         
         /**
          *
+         * @var Category
+         * @ManyToOne(targetEntity="Photo")
+         * @JoinColumns({
+         *  @JoinColumn(name="photo_id", referencedColumnName="id")
+         * })
+         */
+        private $image;
+        
+        /**
+         *
          * @var type 
-         * @OneToMany(targetEntity="Offer",mappedBy="offer", cascade={"persist","remove"})
+         * @OneToMany(targetEntity="Offer",mappedBy="shop", cascade={"persist","remove"})
          */
         private $offers;
         
@@ -51,6 +61,10 @@ class Shop {
          * @ManyToOne(targetEntity="ShopCategory", inversedBy="shops")
          */
         private $category;
+        
+        public function getOffers(){
+            return $this->offers;
+        }
 	
 	public function __get($property){
 		return $this->$property;

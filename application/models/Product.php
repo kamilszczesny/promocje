@@ -5,17 +5,17 @@ class Application_Model_Product{
         protected $doctrineContainer = null;
         
         function __construct(){
-            $this->entity = new ZC\Entity\Offer();
+            $this->entity = new ZC\Entity\Product();
             $this->doctrineContainer = Zend_Registry::get('doctrine');
             $this->em = $this->doctrineContainer->getEntityManager();
         } 
         
         function getAll(){
-            $offers = $this->em->createQuery('SELECT o FROM ZC\Entity\Offer o')
+            $products = $this->em->createQuery('SELECT o FROM ZC\Entity\Product o ORDER BY o.name ASC')
                          ->getResult();
-            return $offers;
+            return $products;
         }
-        function addOffer($offer, $productAgregats){          
+        function addProduct($product, $productAgregats){          
             if(!empty($product['name']) && !empty($product['sizeNetto'])){
                 $p = new ZC\Entity\Product();
                 $p->name = $product['name'];
@@ -37,6 +37,25 @@ class Application_Model_Product{
                 $this->em->flush();
             }
             
+        }
+        
+        function saveProduct($productData, $productObject, $productAgregats){
+            if(!empty($productData['name']) && is_object($productObject)){
+                $mapper = new Ext_DataMapper();
+                $mapper->mapArrayToObject($productData, $productObject, array(
+                    'productagregat' => $productAgregats,
+                ));
+                $this->em->flush();
+            }
+        }
+        
+        function getProductById($id){
+            if(!empty($id)){
+                $product = $this->em->find('ZC\Entity\Product', $id);
+                return $product;
+            } else {
+                return null;
+            }
         }
 }
 ?>

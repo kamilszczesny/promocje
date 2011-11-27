@@ -27,6 +27,36 @@ class ZCEntityOfferProxy extends \ZC\Entity\Offer implements \Doctrine\ORM\Proxy
     }
 
     
+    public function isCurrent()
+    {
+        $this->_load();
+        return parent::isCurrent();
+    }
+
+    public function isPast()
+    {
+        $this->_load();
+        return parent::isPast();
+    }
+
+    public function isFuture()
+    {
+        $this->_load();
+        return parent::isFuture();
+    }
+
+    public function getDateFrom()
+    {
+        $this->_load();
+        return parent::getDateFrom();
+    }
+
+    public function getDateTo()
+    {
+        $this->_load();
+        return parent::getDateTo();
+    }
+
     public function __get($property)
     {
         $this->_load();
@@ -42,6 +72,6 @@ class ZCEntityOfferProxy extends \ZC\Entity\Offer implements \Doctrine\ORM\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'promotions', 'cities', 'shop', 'dateFrom', 'dateTo');
+        return array('__isInitialized__', 'id', 'promotions', 'cities', 'shop', 'name', 'dateFrom', 'dateTo');
     }
 }

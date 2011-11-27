@@ -18,7 +18,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         //$doctrine = new Bisna\Application\Container\Bisna_Application_Resource_Doctrine();
         //$doctrine->init();
         //$container = $this->getResource('doctrine');
-        
+        date_default_timezone_set('Europe/Warsaw');
         $config = $this->getOptions();
 //        echo('<pre>');
 //        print_r($config);
@@ -51,6 +51,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 $viewRender->setViewSuffix('tpl');
          $layout->setViewSuffix('tpl');
 	 Zend_Controller_Action_HelperBroker::addHelper($viewRender);
+         
+         //ustawianie ZendX_jQuery
+         $view->addHelperPath('ZendX/jQuery/View/Helper','ZendX_Jquery_View_Helper');
+         $view->headTitle()->setSeparator(' - ');
+         $view->headTitle('Promoland.pl');
+         ZendX_jQuery::enableView($view);
 	 return $view;
 }
 
@@ -76,7 +82,11 @@ private function registerAutoloaders(array $config = array())
             ? $config['includePath'] : APPLICATION_PATH . '/../library/Doctrine';
 
         require_once $doctrineIncludePath . '/Common/ClassLoader.php';
+        $autoloader->registerNamespace('Upload_');
+        $autoloader->registerNamespace('wi_');
+        $autoloader->registerNamespace('ZendX_');
 
+        //$test = \Wideimage\wi_WideImage::
         $symfonyAutoloader = new \Doctrine\Common\ClassLoader('Symfony');
         $autoloader->pushAutoloader(array($symfonyAutoloader, 'loadClass'), 'Symfony');
         

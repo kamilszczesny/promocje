@@ -27,5 +27,23 @@ class Application_Model_ProductAgregat{
             }
             
         }
+                function saveProductAgregat($productAgregatData, $productAgregatObject, $categories){
+            if(!empty($productAgregatData['name'])){
+                $mapper = new Ext_DataMapper();
+                $mapper->mapArrayToObject($productAgregatData, $productAgregatObject, array(
+                    'category' => $categories,
+                ));
+                $this->em->flush();
+            }
+            
+        }
+        function getProductAgregatById($id){
+            if(!empty($id)){
+                $productAgregat = $this->em->find('ZC\Entity\ProductAgregat', $id);
+                return $productAgregat;
+            } else {
+                return null;
+            }
+        }
 }
 ?>

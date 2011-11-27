@@ -9,9 +9,9 @@ class Form_ProductAdd extends Zend_Form
         $this->setMethod('post');
         
         $name = new Zend_Form_Element_Text('name');
-        $name->setLabel('Nowy sklep')->setRequired(true)->setErrorMessages(
+        $name->setLabel('Nowy produkt')->setRequired(true)->setErrorMessages(
         	array(
-        		Zend_Validate_NotEmpty::IS_EMPTY=>'Nazwa sklepu jest wymagana',
+        		Zend_Validate_NotEmpty::IS_EMPTY=>'Nazwa produktu jest wymagana',
         	)
         );
         

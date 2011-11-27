@@ -1,5 +1,5 @@
 body{
-	background-color: #ebe6d8;
+    font-family:Helvetica, Arial;
 }
 header{
 	float:left;
@@ -127,4 +127,154 @@ ul.restaurantDetails li span{
 	padding: 0px 0px;
 	margin:20px 0px 10px -10px;
 	height:200px;
+}
+.shopLogo{
+
+}
+.ui-accordion-header{
+    padding-left:35px;
+}
+.promotionsList td{
+    padding:0px 10px;
+}
+
+.promotionsList .promotionPrice{
+    font-size:20px;
+    color:green;
+    font-weight:bold;
+}
+.productImage img,
+.shopImage img{
+    float:left;
+    margin:0px 10px 10px 0px;
+}
+iframe{
+    border:none;
+}
+
+body nav{
+    -webkit-border-radius: 10px;  
+    -moz-border-radius: 10px;  
+    border-radius: 10px;
+    border: 1px solid #D9E0E0;
+    float:left;
+    width:100%;
+    margin:10px 0px;
+    font-family:Helvetica, arial;
+    font-weight:bold;
+}
+nav a{
+    color:#949494;
+    font-size: 15px;
+}
+nav a:hover,
+nav div.navElement:hover a{
+    color:#fa7906;
+}
+a{
+    color:black;
+}
+a:hover{
+    color:#fa7906;
+}
+nav div.navElement:hover{
+    background-color: #D9E0E0;
+}
+nav div.navElement.first{
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+header{
+    width:100%;
+}
+nav div.navElement{
+    float:left;
+    padding:15px;
+    border-right: 1px solid #D9E0E0;
+}
+.sideList{
+    -webkit-border-radius: 4px;  
+    -moz-border-radius: 4px;  
+    border-radius: 4px;
+    border: 1px solid #D9E0E0;
+    float:left;
+    width:100%;
+    margin:10px 0px 15px 0px;;
+    font-family:Helvetica, arial;
+
+}
+.sideList .sideTitle{
+    border-bottom: 1px solid #D9E0E0;
+    padding:10px 10px 13px 10px;
+    font-family:Arial Narrow, Helvetica, Arial;
+    font-size:21px;
+    color:#fa7906;
+}
+.sideList a{
+    padding:8px;
+    border-bottom: 1px solid #D9E0E0;
+    display:block;
+    background: url(../images/s/plachta.png) no-repeat 100% 0px transparent; 
+}
+.sideList.products a{
+    background:none;
+}
+/*.sideList a:hover{
+    background-position:100% -34px;
+}*/
+.sideList .last{
+    border-bottom: none;
+}
+.sideList .category.parent,
+.sideList .category.selected{
+    background-color:#ededed;
+}
+.promotionsList{
+    float:left;
+    clear:both;
+    width:100%;
+}
+img.similarImg{
+    max-width:100px;
+}
+h1, h2{
+    font-family:Arial Narrow, Helvetica, Arial;
+}
+.clear{
+    clear:both;
+}
+h3.offerDates{
+    width:100%;
+    margin:5px 0px 10px;
+    border-bottom: 1px solid #D9E0E0;
+    text-align:right;
+}
+.promotionItemInOffer{
+    float:left;
+    width:140px;
+    padding:15px;
+}
+.promotionItemInOffer img{
+    max-width:140px;
+    margin:0px;
+}
+.promotionItemInOffer .productImage{
+    width:140px;
+    height:180px;
+    overflow:hidden;
+}
+.promotionItemInOffer .promotionName{
+    width:75px;
+    display:block;
+    float:left;
+}
+.promotionItemInOffer .promotionPrice{
+    width: 65px;
+    float:right;
+    font-size:11px;
+    text-align:right;
 }

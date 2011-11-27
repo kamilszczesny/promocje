@@ -1,7 +1,7 @@
 <?php
 class Form_ProductAgregatAdd extends Zend_Form 
 { 
-    public function __construct($options = null) 
+    public function __construct($categories, $options = null) 
     { 
         parent::__construct($options);
         $this->setName('add_productAgregat');
@@ -24,10 +24,16 @@ class Form_ProductAgregatAdd extends Zend_Form
         $ingredients->setLabel('skład');
         $imageUrl = new Zend_Form_Element_Text('imageUrl');
         $imageUrl->setLabel('ściezka do obrazka');
+        //Category
+        $category = new Zend_Form_Element_Select('category');
+        $category->addMultiOption(0, 'Brak')->setLabel('Kategoria produktu');
+        foreach ($categories as $key => $item) {
+            $category->addMultiOption($item->id, $item->name);
+        }
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('zapisz nowy agregat produktu');
         
-        $this->addElements(array($name,$description, $ingredients, $imageUrl, $submit));
+        $this->addElements(array($name,$description, $ingredients, $imageUrl, $category, $submit));
         
     } 
 }

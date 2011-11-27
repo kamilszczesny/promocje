@@ -55,6 +55,16 @@ class Product
         
         /**
          *
+         * @var Category
+         * @ManyToOne(targetEntity="Photo")
+         * @JoinColumns({
+         *  @JoinColumn(name="photo_id", referencedColumnName="id")
+         * })
+         */
+        private $image;
+        
+        /**
+         *
          * @var ProductAgregat
          * @ManyToOne(targetEntity="ProductAgregat")
          * @JoinColumns({
@@ -66,7 +76,7 @@ class Product
         /**
          *
          * @var type 
-         * @OneToMany(targetEntity="Promotion",mappedBy="promotion", cascade={"persist","remove"})
+         * @OneToMany(targetEntity="Promotion",mappedBy="product", cascade={"persist","remove"})
          */
         private $promotions;
         
@@ -78,9 +88,71 @@ class Product
 	 */
 	private $sizeUnit;
         
+        private $pastPromotions = array();
+        private $currentPromotions = array();
+        private $futurePromotions = array();
+        private $sortedPromotions = false;
+        private $smallestCurrentPrice = null;
         
         
+        public function getSizeString(){
+            if( !empty($this->sizeBrutto) && !empty($this->sizeNetto)){
+                return $this->sizeBrutto.' '.$this->sizeUnit.' ('.$this->sizeNetto.' '.$this->sizeUnit.'netto )';
+            } else if(!empty($this->sizeNetto)){
+                return $this->sizeNetto.' '.$this->sizeUnit;
+            }
+            return '';
+        }
+        
+        public function getPastPromotions(){
+            if(!$this->sortedPromotions){
+                $this->sortPromotions();
+            }
+            return $this->pastPromotions;
+        }
+        
+        public function getCurrentPromotions(){
+            if(!$this->sortedPromotions){
+                $this->sortPromotions();
+            }
+            return $this->currentPromotions;
+        }
+        
+        public function getFuturePromotions(){
+            if(!$this->sortedPromotions){
+                $this->sortPromotions();
+            }
+            return $this->futurePromotions;
+        }
+        
+        private function sortPromotions(){
+            $promotions = $this->getPromotions();
+            if(!empty($promotions)){
+                foreach($promotions as $key=>$p){
+                    if($p->isCurrent()){
+                        $this->currentPromotions[] = $this->promotions[$key];
+                        if(empty($this->smallestCurrentPrice) || $p->getRealPrice()<$this->smallestCurrentPrice) $this->smallestCurrentPrice = $p->getRealPrice();
+                    } else if($p->isPast()){
+                        $this->pastPromotions[] = $this->promotions[$key];
+                    } else if($p->isFuture()){
+                        $this->futurePromotions[] = $this->promotions[$key];
+                    }
+                }
+                $this->sortedPromotions = true;
+            }
+        }       
+        
+        public function getSmallestCurrentPrice(){
+            if(!$this->sortedPromotions){
+                $this->sortPromotions();
+            }
+            return $this->smallestCurrentPrice;
+        }
 	
+        public function getPromotions(){
+            return $this->promotions;
+        }
+        
 	public function __get($property){
 		return $this->$property;
 	}

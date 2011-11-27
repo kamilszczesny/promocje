@@ -44,6 +44,27 @@ class ProductAgregat {
          */
         private $imageUrl;
         
+        
+        /**
+         *
+         * @var Category
+         * @ManyToOne(targetEntity="Photo")
+         * @JoinColumns({
+         *  @JoinColumn(name="photo_id", referencedColumnName="id")
+         * })
+         */
+        private $image;
+        
+        /**
+         *
+         * @var Category
+         * @ManyToOne(targetEntity="Category")
+         * @JoinColumns({
+         *  @JoinColumn(name="category_id", referencedColumnName="id")
+         * })
+         */
+        private $category;
+        
         /**
          *
          * @var type 

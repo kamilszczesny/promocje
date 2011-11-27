@@ -23,11 +23,18 @@ class Category {
 	 */
 	private $ip;
 	
+        /**
+	 * 
+	 * @Column(type="string", nullable="false", length=300)
+	 * @var string
+	 */
+	private $name;
+        
         
         /**
          *
          * @var type 
-         * @OneToMany(targetEntity="Category",mappedBy="category", cascade={"persist","remove"})
+         * @OneToMany(targetEntity="Category",mappedBy="parent", cascade={"persist","remove"})
          */
         private $children;
         

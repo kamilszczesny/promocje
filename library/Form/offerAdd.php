@@ -1,7 +1,7 @@
 <?php
 class Form_OfferAdd extends Zend_Form 
 { 
-    public function __construct($citiesArg, $options = null) 
+    public function __construct($citiesArg, $shopsArg, $options = null) 
     { 
         parent::__construct($options);
         $this->setName('add_offer');
@@ -23,7 +23,7 @@ class Form_OfferAdd extends Zend_Form
                 Zend_Validate_Date::INVALID        => 'Nie jest to poprawna data',
                 Zend_Validate_Date::INVALID_DATE    => 'Podana data nie pasuje do formatu'
             )
-        )->setFormat('yyyy-MM-dd HH:mm');
+        )->setFormat('yyyy-mm-dd');
         $dateFrom->setLabel('Początek promocji')
         	->setRequired(true)
         	->addValidator($validatorDate)
@@ -37,7 +37,12 @@ class Form_OfferAdd extends Zend_Form
         
 
         //shop
-        //
+        $shop = new Zend_Form_Element_Select('shop');
+        $shop->addMultiOption(0, 'Brak')->setLabel('Sklep');
+        foreach($shopsArg as $key=>$item){
+            $shop->addMultiOption($item->id, $item->name);
+        }
+            
         //cities
         $cities = new Zend_Form_Element_MultiCheckbox ('cities');
         foreach($citiesArg as $key=>$item){
@@ -45,9 +50,9 @@ class Form_OfferAdd extends Zend_Form
         }
         
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('zapisz nowy produkt');
+        $submit->setLabel('zapisz nową gazetkę');
         
-        $this->addElements(array($name, $dateFrom, $dateTo, $cities, $submit));
+        $this->addElements(array($name, $dateFrom, $dateTo, $cities, $shop, $submit));
         
     } 
 }

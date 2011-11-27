@@ -1,0 +1,46 @@
+/* 
+    Document   : backend
+    Created on : 2011-11-05, 09:54:33
+    Author     : Kamil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.ac_results{
+    background-color:white;
+    border:1px solid gray;
+}
+
+.ac_results ul{
+    list-style: none;
+    padding-left:0px;
+    margin:0px;
+}
+.ac_results ul li{
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.ac_results ul li.ac_over{
+    background-color:gray;
+}
+.imageSelector{
+    float:left;
+    padding:2px;
+}
+.imageSelector img{
+    height:150px;
+    clear:both;
+}
+.imageSelector.selectedPhoto{
+    border:2px solid green;
+}
+.imgName{
+    display:block;
+    clear:both;
+}

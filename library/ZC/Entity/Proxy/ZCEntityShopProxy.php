@@ -27,6 +27,12 @@ class ZCEntityShopProxy extends \ZC\Entity\Shop implements \Doctrine\ORM\Proxy\P
     }
 
     
+    public function getOffers()
+    {
+        $this->_load();
+        return parent::getOffers();
+    }
+
     public function __get($property)
     {
         $this->_load();
@@ -42,6 +48,6 @@ class ZCEntityShopProxy extends \ZC\Entity\Shop implements \Doctrine\ORM\Proxy\P
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'description', 'imageUrl', 'offers', 'cities', 'category');
+        return array('__isInitialized__', 'id', 'name', 'description', 'imageUrl', 'image', 'offers', 'cities', 'category');
     }
 }

@@ -27,6 +27,48 @@ class ZCEntityPromotionProxy extends \ZC\Entity\Promotion implements \Doctrine\O
     }
 
     
+    public function isCurrent()
+    {
+        $this->_load();
+        return parent::isCurrent();
+    }
+
+    public function isPast()
+    {
+        $this->_load();
+        return parent::isPast();
+    }
+
+    public function isFuture()
+    {
+        $this->_load();
+        return parent::isFuture();
+    }
+
+    public function getDateFrom()
+    {
+        $this->_load();
+        return parent::getDateFrom();
+    }
+
+    public function getDateTo()
+    {
+        $this->_load();
+        return parent::getDateTo();
+    }
+
+    public function getPriceString()
+    {
+        $this->_load();
+        return parent::getPriceString();
+    }
+
+    public function getRealPrice()
+    {
+        $this->_load();
+        return parent::getRealPrice();
+    }
+
     public function __get($property)
     {
         $this->_load();

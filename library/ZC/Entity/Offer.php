@@ -20,7 +20,7 @@ class Offer {
         /**
          *
          * @var type 
-         * @OneToMany(targetEntity="Promotion",mappedBy="promotion", cascade={"persist","remove"})
+         * @OneToMany(targetEntity="Promotion",mappedBy="offer", cascade={"persist","remove"})
          */
         private $promotions;
         
@@ -61,6 +61,46 @@ class Offer {
          */
         private $dateTo;
         
+        public function isCurrent(){
+               date_default_timezone_set('Europe/Warsaw');
+               $today = new \DateTime('today');
+               //echo('sprawdzam czy aktualna - dziś: '.$today->format('d-m-Y').' daty promocji: '.$this->dateFrom->format('d-m-Y').' - '.$this->dateTo->format('d-m-Y'));
+               if($today >= $this->dateFrom && $today <= $this->dateTo){
+                   return true;
+               } else {
+                   return false;
+               }
+        }
+        
+        public function isPast(){
+            date_default_timezone_set('Europe/Warsaw');
+            $today = new \DateTime('today');
+            if($today > $this->dateTo){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public function isFuture(){
+            date_default_timezone_set('Europe/Warsaw');
+            $today = new \DateTime('today');
+            if( $today < $this->dateFrom){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public function getDateFrom(){
+            $dateString = $this->dateFrom->format('d-m-Y');
+            return $dateString;
+        }
+        
+        public function getDateTo(){
+            $dateString = $this->dateTo->format('d-m-Y');
+            return $dateString;
+        }
 	
 	public function __get($property){
 		return $this->$property;

@@ -39,13 +39,13 @@ class Promotion {
         
         /**
          *
-         * @Column(type="decimal")
+         * @Column(type="float")
          */
         private $price;
         
         /**
          *
-         * @Column(type="decimal")
+         * @Column(type="float")
          */
         private $returnPrice;
         
@@ -55,7 +55,38 @@ class Promotion {
          * @Column(type="string", length=250)
          */
         private $promotionComment;
-	
+        
+        public function isCurrent(){
+            return $this->offer->isCurrent();
+        }
+        
+        public function isPast(){
+            return $this->offer->isPast();
+        }
+        
+        public function isFuture(){
+            return $this->offer->isFuture();
+        }
+        
+        public function getDateFrom(){
+            return $this->offer->getDateFrom();
+        }
+        
+        public function getDateTo(){
+            return $this->offer->getDateTo();
+        }
+	public function getPriceString(){
+            $currency = '';
+            $p = (float)$this->price.$currency;
+            if($this->returnPrice > 0){
+                $p .= ' (zwracane później '.$this->returnPrice.$currency.')';
+            }
+            return $p;
+            
+        }
+        public function getRealPrice(){
+            return $this->price - $this->returnPrice;
+        }
 	public function __get($property){
 		return $this->$property;
 	}

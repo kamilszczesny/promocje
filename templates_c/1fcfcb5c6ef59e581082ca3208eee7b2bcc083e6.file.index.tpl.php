@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-11-01 12:36:38
+<?php /* Smarty version Smarty-3.0.7, created on 2011-11-01 18:42:06
          compiled from "C:\Program Files (x86)\Zend\Apache2\htdocs\promocje\application/views/scripts/offer/index.tpl" */ ?>
-<?php /*%%SmartyHeaderCode:1924eafd9c6901146-73102379%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:251384eb02f6e53ab88-81153267%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '1fcfcb5c6ef59e581082ca3208eee7b2bcc083e6' => 
     array (
       0 => 'C:\\Program Files (x86)\\Zend\\Apache2\\htdocs\\promocje\\application/views/scripts/offer/index.tpl',
-      1 => 1320146935,
+      1 => 1320169323,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1924eafd9c6901146-73102379',
+  'nocache_hash' => '251384eb02f6e53ab88-81153267',
   'function' => 
   array (
   ),
@@ -41,18 +41,10 @@ if ($_smarty_tpl->_count($_from) > 0){
 
 <script>
 	$(function() {
-		$( "#wyborDatyStart" ).datetimepicker(
-				{
-					hourMin: 0,
-		            hourMax: 24
-				}
-				);
-                $( "#wyborDatyStop" ).datetimepicker(
-				{
-					hourMin: 0,
-		            hourMax: 24
-				}
-				);
+		$( "#wyborDatyStart" ).datepicker({dateFormat: 'yy-mm-dd'});
+                $( "#wyborDatyStop" ).datepicker({dateFormat: 'yy-mm-dd'});
+                $('select#shop').select_autocomplete();
+                //$('select#shop').show();
 	});
 </script>
 

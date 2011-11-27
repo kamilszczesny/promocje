@@ -42,6 +42,6 @@ class ZCEntityCategoryProxy extends \ZC\Entity\Category implements \Doctrine\ORM
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'ip', 'children', 'parent', 'productagregats');
+        return array('__isInitialized__', 'id', 'ip', 'name', 'children', 'parent', 'productagregats');
     }
 }
