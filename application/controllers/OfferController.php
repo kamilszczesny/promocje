@@ -3,9 +3,10 @@
 class OfferController extends Zend_Controller_Action {
 
     //MODELS
-    var $offerModel = null;
-    var $cityModel = null;
-    var $shopModel = null;
+    private $offerModel = null;
+    private $cityModel = null;
+    private $shopModel = null;
+    private $isLogged = false;
 
     public function init() {
         $this->offerModel = new Application_Model_Offer();
@@ -32,51 +33,26 @@ class OfferController extends Zend_Controller_Action {
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/foundation/stylesheets/foundation.css'));
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/foundation/stylesheets/app.css'));
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/foundation/stylesheets/ie.css'));
+
+        if (Zend_Auth::getInstance()->hasIdentity())
+            $this->isLogged = true;
+        else
+            $this->isLogged = false;
     }
 
     public function addAction() {
-        $cities = $this->cityModel->getAll();
-        $shops = $this->shopModel->getAll();
-
-        $formularz = new Form_OfferAdd($cities, $shops);
-
-        if ($this->getRequest()->isPost()) {
-            $request = $this->getRequest();
-            $formData = $request->getPost();
-            if ($formularz->isValid($formData)) {
-                $this->offerModel->addOffer($formData, $shops, $cities);
-                $this->view->message = 'Dodano nową gazetkę';
-            } else {
-                $this->view->form = $formularz;
-                $this->view->message = 'Wystąpił błąd dodawania nowej gazetki';
-            }
-        } else {
-            $this->view->form = $formularz;
-            $this->view->message = '';
-        }
-
-        $offers = $this->offerModel->getAll();
-        $this->view->data = $offers;
-        $this->view->form = $formularz;
-    }
-
-    public function modifyAction() {
-        $id = $this->_getParam('id', null);
-        if (!empty($id)) {
+        if ($this->isLogged) {
             $cities = $this->cityModel->getAll();
             $shops = $this->shopModel->getAll();
-            $offer = $this->offerModel->getOfferById($id);
-            
 
-            $formularz = new Form_OfferModify($offer, $cities, $shops);
+            $formularz = new Form_OfferAdd($cities, $shops);
 
             if ($this->getRequest()->isPost()) {
                 $request = $this->getRequest();
                 $formData = $request->getPost();
-                
                 if ($formularz->isValid($formData)) {
-                    $this->offerModel->saveOffer($formData, $offer, $shops, $cities);
-                    $this->view->message = 'Zmodyfikowano gazetkę';
+                    $this->offerModel->addOffer($formData, $shops, $cities);
+                    $this->view->message = 'Dodano nową gazetkę';
                 } else {
                     $this->view->form = $formularz;
                     $this->view->message = 'Wystąpił błąd dodawania nowej gazetki';
@@ -88,6 +64,40 @@ class OfferController extends Zend_Controller_Action {
 
             $offers = $this->offerModel->getAll();
             $this->view->data = $offers;
+            $this->view->form = $formularz;
+        }
+    }
+
+    public function modifyAction() {
+        if ($this->isLogged) {
+            $id = $this->_getParam('id', null);
+            if (!empty($id)) {
+                $cities = $this->cityModel->getAll();
+                $shops = $this->shopModel->getAll();
+                $offer = $this->offerModel->getOfferById($id);
+
+
+                $formularz = new Form_OfferModify($offer, $cities, $shops);
+
+                if ($this->getRequest()->isPost()) {
+                    $request = $this->getRequest();
+                    $formData = $request->getPost();
+
+                    if ($formularz->isValid($formData)) {
+                        $this->offerModel->saveOffer($formData, $offer, $shops, $cities);
+                        $this->view->message = 'Zmodyfikowano gazetkę';
+                    } else {
+                        $this->view->form = $formularz;
+                        $this->view->message = 'Wystąpił błąd dodawania nowej gazetki';
+                    }
+                } else {
+                    $this->view->form = $formularz;
+                    $this->view->message = '';
+                }
+
+                $offers = $this->offerModel->getAll();
+                $this->view->data = $offers;
+            }
         }
     }
 
