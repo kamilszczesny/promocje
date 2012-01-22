@@ -125,10 +125,19 @@ class Product
             return $this->futurePromotions;
         }
         
+        public function setPromotions($p){
+            $this->promotions = $p;
+        }
+        
         private function sortPromotions(){
             $promotions = $this->getPromotions();
             if(!empty($promotions)){
                 foreach($promotions as $key=>$p){
+//                    echo '<pre>';
+//                    print_r($p);
+//                    echo '</pre>';
+//                    echo(gettype($p).' ');
+//                    echo(get_class($p).' ');
                     if($p->isCurrent()){
                         $this->currentPromotions[] = $this->promotions[$key];
                         if(empty($this->smallestCurrentPrice) || $p->getRealPrice()<$this->smallestCurrentPrice) $this->smallestCurrentPrice = $p->getRealPrice();
@@ -151,6 +160,43 @@ class Product
 	
         public function getPromotions(){
             return $this->promotions;
+        }
+        
+        public function getMainCategory() {
+            $mainCategory = null;
+            if (!empty($this->productagregat)) {
+                $categories = $this->productagregat->getCategories();
+                if (!empty($categories)) {
+                    foreach ($this->productagregat->categories as $key => $item) {
+                        if (empty($mainCategory) || $mainCategory->level < $item->level) {
+                            $mainCategory = $item;
+                        }
+                    }
+                }
+            }
+            return $mainCategory;
+        }
+        
+        private function compareCategories($a, $b){
+            if ($a->level == $b->level) return 0;
+            return ($a->level < $b->level) ? -1 : 1;
+        }
+        
+        private function sortCategories($c){
+            if(!is_array($c))$a = $c->toArray();
+            else $a = $c;
+            usort($a, array($this,'compareCategories'));
+            return $a;
+        }
+        
+        public function getCategories(){
+            if (!empty($this->productagregat)) {
+                $categories = $this->productagregat->getCategories();
+                if (!empty($categories)) {
+                    return $this->sortCategories($categories);
+                }
+            }
+            return null;
         }
         
 	public function __get($property){

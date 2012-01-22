@@ -1,3 +1,4 @@
+{if !empty($form)}
 {$message}
 
 <div class="eight columns phone-four content">
@@ -22,7 +23,7 @@
 {literal}
     <script>
             $(function() {
-                    $('select#category').select_autocomplete();
+                    $('select#cities').select_autocomplete();
             });
     </script>
 {/literal}
@@ -37,3 +38,7 @@
               
     {/literal}
 </script>
+{else}
+    {capture assign=backurl}{zurl controller=shop action=add}{/capture}
+    {include file=$smarty.const.APPLICATION_PATH|cat:'\views\scripts\modules\loginform.tpl' backUrl=$backurl}
+{/if}

@@ -148,6 +148,11 @@ ul.restaurantDetails li span{
     float:left;
     margin:0px 10px 10px 0px;
 }
+.productBlurb{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
 iframe{
     border:none;
 }
@@ -220,6 +225,11 @@ nav div.navElement{
     display:block;
     background: url(../images/s/plachta.png) no-repeat 100% 0px transparent; 
 }
+.sideList span{
+    padding:8px;
+    border-bottom: 1px solid #D9E0E0;
+    display:block;
+}
 .sideList.products a{
     background:none;
 }
@@ -249,9 +259,10 @@ h1, h2{
 }
 h3.offerDates{
     width:100%;
-    margin:5px 0px 10px;
+    margin:10px 0px 10px;
     border-bottom: 1px solid #D9E0E0;
-    text-align:right;
+    text-align:left;
+    padding-bottom:10px;
 }
 .promotionItemInOffer{
     float:left;
@@ -277,4 +288,149 @@ h3.offerDates{
     float:right;
     font-size:11px;
     text-align:right;
+}
+.productAgregat{
+    float:left;
+    
+}
+.productAgregat .productImage img{
+    width:130px;
+}
+.productAgregat .productImage{
+    height: 150px;
+    width:130px;
+    overflow:hidden;
+    float:left;
+}
+.productSizesList li{
+    display:block;
+    clear:both;
+    margin-bottom:5px;
+    float:left;
+}
+.productSizesList li span{
+    display:block;
+    float:left;
+}
+.productSizesList li a{
+    display:block;
+    float:left;
+    margin-right:5px;
+}
+.productSizesList{
+    display:block;
+    float:left;
+}
+.sizeChangeButton{
+    padding:4px;
+}
+a:hover.button,
+a.button{
+    display:inline;
+}
+.shopBlurb, .productBlurb{
+    float:left;
+    -webkit-border-radius: 5px;  
+    -moz-border-radius: 5px;  
+    border-radius: 5px;  
+    border:1px dashed #EDEDED;
+    text-align:center;
+    align:center;
+    margin-top:10px;
+}
+.shopBlurb .shopImage img,
+.productBlurb .productImage img{
+    width:136px;
+    margin:5px 0px;
+}
+.shopBlurb .shopImage{
+    height:150px;
+    overflow:hidden;
+    width:140px;
+    margin:0px auto;
+}
+.productBlurb .productImage{
+    height:180px;
+    overflow:hidden;
+    width:140px;
+    margin:0px auto;
+}
+.offerCitiesButton{
+    display:block;
+    float:right;
+}
+div.citiesList.alert-box{
+    display:none;
+}
+.offerItem{
+    padding:15px 0px;;
+}
+div.cityChoser.alert-box{
+    clear:both;
+    margin:20px 0px;
+    height:30px;
+    overflow:hidden;
+}
+#cityChooser{
+    width:200px;
+    float:left;
+    margin:0px;
+    padding:4px 0px 0px 10px;
+}
+#cityChooser #cities-label{
+    display:none;
+}
+#showPromotions{
+    display:block;
+    float:right;
+    text-shadow:none;
+}
+.cityChoser{
+    float:left;
+    width:100%
+}
+.cityChoser .citychooserInfo{
+    float:left;
+    padding-top:6px;
+}
+.cityChoser h4{
+    float:left;
+    display:block;
+}
+#cities-element input{
+    height:12px;
+    width:300px;
+}
+#logo{
+    margin:30px 10px 15px 5px;
+}
+.mainColumn{
+    margin-top: 15px;
+}
+.ac_results{
+    z-index:3000;
+}
+#citiesPopup-label{
+    display:none;
+}
+.sgPage h2{
+    font-size:22px;
+    width:100%;
+    border-bottom:1px solid #D9E0E0;
+    color: #404040;
+}
+#productSearch, #shopSearch{
+    float:left;
+    width:50%;
+    margin-top:5px;
+}
+#productsSearch, #shopsSearch{
+    float:right;
+    display:block;
+}
+#products-label, #shops-label{
+    display:none;
+}
+.row:after{
+    margin:10px 0px;
 }

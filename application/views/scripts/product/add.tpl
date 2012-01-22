@@ -1,4 +1,5 @@
-{$message}
+{if !empty($form)}
+{if !empty($message)}{$message}{/if}
 <hr/>
 <iframe src="{zurl controller=photo action=upload}" width="100%" height="75">
   <p>Twoje przeglądarka nie obsługuje iframów</p>
@@ -7,7 +8,9 @@
   <p>Twoje przeglądarka nie obsługuje iframów</p>
 </iframe> 
 <hr/>
+
 {$form}
+
 <hr/>
 {if !empty($data)}
     {foreach from=$data item=item key=key name=agregats}{if !$smarty.foreach.agregats.first}, {/if}{$item->name}{/foreach}
@@ -31,8 +34,8 @@
               
     {/literal}
 </script>
-
-<p id="message"></p>
-
-<p id="result"></p>
+{else}
+    {capture assign=backurl}{zurl controller=shop action=add}{/capture}
+    {include file=$smarty.const.APPLICATION_PATH|cat:'\views\scripts\modules\loginform.tpl' backUrl=$backurl}
+{/if}
 

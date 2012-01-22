@@ -3,9 +3,10 @@
 class ShopController extends Zend_Controller_Action {
 
     //MODELS
-    var $shopModel = null;
-    var $categoryModel = null;
-    var $cityModel = null;
+    private $shopModel = null;
+    private $categoryModel = null;
+    private $cityModel = null;
+    private $isLogged = false;
 
     public function init() {
         /* Initialize action controller here */
@@ -21,6 +22,7 @@ class ShopController extends Zend_Controller_Action {
         $this->view->headScript()->appendFile($this->view->baseUrl('/js/jquery.autocomplete.pack.js'));
         $this->view->headScript()->appendFile($this->view->baseUrl('/js/jquery.select-autocomplete.js'));
         $this->view->headScript()->appendFile($this->view->baseUrl('/js/jquery.form.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('/js/jstorage.min.js'));
 
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/css/anytime.css'));
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/css/jquery-ui-1.8.16.custom.css'));
@@ -30,15 +32,25 @@ class ShopController extends Zend_Controller_Action {
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/css/local.css'));
         $this->view->headLink()->appendStylesheet($this->view->baseUrl('/css/backend.css'));
 
+        if (Zend_Auth::getInstance()->hasIdentity())
+            $this->isLogged = true;
+        else
+            $this->isLogged = false;
     }
 
     public function indexAction() {
         $id = $this->_getParam('id', null);
         if (!empty($id)) {
+            $cityId = $this->cityModel->getSessionCity();
             $shop = $this->shopModel->getShopById($id);
             $categories = $this->categoryModel->getAll();
+            $cities = $this->cityModel->getCitiesByShopId($id);
+            $form = new Form_CityChoser($cities, 'cities', $cityId);
             $this->view->data = $shop;
             $this->view->categories = $categories;
+            $this->view->form = $form;
+            $this->view->headTitle()->prepend('Aktualne gazetki promocyjne');
+            $this->view->headTitle()->prepend($shop->name);
         }
     }
 
@@ -67,54 +79,58 @@ class ShopController extends Zend_Controller_Action {
     }
 
     public function modifyAction() {
-        $id = $this->_getParam('id', null);
-        $shop = $this->shopModel->getShopById((int) $id);
-        $categories = $this->categoryModel->getAll();
-        $cities = $this->cityModel->getAll();
+        if ($this->isLogged) {
+            $id = $this->_getParam('id', null);
+            $shop = $this->shopModel->getShopById((int) $id);
+            $categories = $this->categoryModel->getAll();
+            $cities = $this->cityModel->getAll();
 
-        $formularz = new Form_ShopModify(array(), $shop, $categories, $cities);
+            $formularz = new Form_ShopModify(array(), $shop, $categories, $cities);
 
-        if ($this->getRequest()->isPost()) {
-            $request = $this->getRequest();
-            $formData = $request->getPost();
-            if ($formularz->isValid($formData)) {
-                $this->shopModel->saveShop($formData, $shop, $categories, $cities);
-                $this->view->message = 'Zmodyfikowano sklep';
+            if ($this->getRequest()->isPost()) {
+                $request = $this->getRequest();
+                $formData = $request->getPost();
+                if ($formularz->isValid($formData)) {
+                    $this->shopModel->saveShop($formData, $shop, $categories, $cities);
+                    $this->view->message = 'Zmodyfikowano sklep';
+                } else {
+                    $this->view->form = $formularz;
+                    $this->view->message = 'Wystąpił błąd w zapisywaniu zmian w sklepie';
+                }
             } else {
                 $this->view->form = $formularz;
-                $this->view->message = 'Wystąpił błąd w zapisywaniu zmian w sklepie';
+                $this->view->message = '';
             }
-        } else {
-            $this->view->form = $formularz;
-            $this->view->message = '';
-        }
 
-        $shops = $this->shopModel->getAll();
-        $this->view->data = $shops;
+            $shops = $this->shopModel->getAll();
+            $this->view->data = $shops;
+        }
     }
 
     public function addAction() {
-        $categories = $this->categoryModel->getAll();
-        $cities = $this->cityModel->getAll();
-        $formularz = new Form_ShopAdd(array(), $categories, $cities);
+        if ($this->isLogged) {
+            $categories = $this->categoryModel->getAll();
+            $cities = $this->cityModel->getAll();
+            $formularz = new Form_ShopAdd(array(), $categories, $cities);
 
-        if ($this->getRequest()->isPost()) {
-            $request = $this->getRequest();
-            $formData = $request->getPost();
-            if ($formularz->isValid($formData)) {
-                $this->shopModel->addShop($formData, $categories, $cities);
-                $this->view->message = 'Dodano nowy sklep';
+            if ($this->getRequest()->isPost()) {
+                $request = $this->getRequest();
+                $formData = $request->getPost();
+                if ($formularz->isValid($formData)) {
+                    $this->shopModel->addShop($formData, $categories, $cities);
+                    $this->view->message = 'Dodano nowy sklep';
+                } else {
+                    $this->view->form = $formularz;
+                    $this->view->message = 'Wystąpił błąd dodawania nowego sklepu';
+                }
             } else {
                 $this->view->form = $formularz;
-                $this->view->message = 'Wystąpił błąd dodawania nowego sklepu';
+                $this->view->message = '';
             }
-        } else {
-            $this->view->form = $formularz;
-            $this->view->message = '';
-        }
 
-        $shops = $this->shopModel->getAll();
-        $this->view->form = $formularz;
+            $shops = $this->shopModel->getAll();
+            $this->view->form = $formularz;
+        }
     }
 
 }

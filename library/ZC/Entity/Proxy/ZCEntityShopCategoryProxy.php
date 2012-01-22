@@ -42,6 +42,6 @@ class ZCEntityShopCategoryProxy extends \ZC\Entity\ShopCategory implements \Doct
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'shops');
+        return array('__isInitialized__', 'id', 'name', 'ip', 'shops', 'children', 'parent');
     }
 }

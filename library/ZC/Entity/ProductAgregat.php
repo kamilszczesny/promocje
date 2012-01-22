@@ -63,7 +63,14 @@ class ProductAgregat {
          *  @JoinColumn(name="category_id", referencedColumnName="id")
          * })
          */
-        private $category;
+        /**
+         * @ManyToMany(targetEntity="Category", inversedBy="productagregats")
+         * @JoinTable(name="productAgragats_categories",
+         *   joinColumns={@JoinColumn(name="productAgregat_id", referencedColumnName="id")},
+         *   inverseJoinColumns={@JoinColumn(name="category_id", referencedColumnName="id")}
+         * )
+         */
+        private $categories;
         
         /**
          *
@@ -72,6 +79,41 @@ class ProductAgregat {
          */
         private $products;
 	
+        public function getIngredients(){
+            return $this->ingredients;
+        }
+        
+        public function getMainCategory() {
+            $mainCategory = null;
+            $categories = $this->getCategories();
+            if (!empty($categories)) {
+                    foreach ($this->categories as $key => $item) {
+                        if (empty($mainCategory) || $mainCategory->level < $item->level) {
+                            $mainCategory = $item;
+                        }
+                    }
+            }
+            return $mainCategory;
+        }
+        
+        private function compareCategories($a, $b){
+            if ($a->level == $b->level) return 0;
+            return ($a->level < $b->level) ? -1 : 1;
+        }
+        
+        private function sortCategories($c){
+            $a = $c->toArray();
+            usort($a, array($this,'compareCategories'));
+            return $a;
+        }
+        
+        public function getCategories(){
+                if (!empty($this->categories)) {
+                    return $this->sortCategories($this->categories);
+                }
+            return null;
+        }
+        
 	public function __get($property){
 		return $this->$property;
 	}

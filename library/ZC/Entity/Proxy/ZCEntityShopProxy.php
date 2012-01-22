@@ -33,6 +33,24 @@ class ZCEntityShopProxy extends \ZC\Entity\Shop implements \Doctrine\ORM\Proxy\P
         return parent::getOffers();
     }
 
+    public function getPastOffers()
+    {
+        $this->_load();
+        return parent::getPastOffers();
+    }
+
+    public function getCurrentOffers()
+    {
+        $this->_load();
+        return parent::getCurrentOffers();
+    }
+
+    public function getFutureOffers()
+    {
+        $this->_load();
+        return parent::getFutureOffers();
+    }
+
     public function __get($property)
     {
         $this->_load();

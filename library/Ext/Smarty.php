@@ -1,5 +1,5 @@
 <?php
-include_once '/Smarty/Smarty.php';
+include_once APPLICATION_PATH . '/../library/Smarty/SmartyBC.class.php';
 class Ext_Smarty extends Zend_View_Abstract {
 
   private $_smarty;
@@ -8,7 +8,7 @@ class Ext_Smarty extends Zend_View_Abstract {
     parent::__construct($data);
 
 
-    $this->_smarty = new Smarty();
+    $this->_smarty = new SmartyBC();
     $this->_smarty->template_dir = $data['template_dir'];
     $this->_smarty->compile_dir = $data['compile_dir'];
     $this->_smarty->config_dir = $data['config_dir'];

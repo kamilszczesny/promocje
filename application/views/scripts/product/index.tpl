@@ -1,7 +1,12 @@
 <div class="three phone-two columns">
-    {include file=$smarty.const.APPLICATION_PATH|cat:'\views\scripts\modules\categoryTreeProduct.tpl' data=$data->productagregat->category}
+    {assign var=cat1 value=$data->getMainCategory()}
+    {assign var=categories value=$data->getCategories()}
+    {if !empty($cat1)}
+        {include file='file:modules/categoryTreeProduct.tpl' data=$categories currCat=$cat1}
+        {include file='file:modules/similarProducts.tpl' data=$cat1}
+    {/if}
 </div>
-<div class="nine columns phone-four">
+<div class="nine columns phone-four mainColumn">
     {if !empty($data)}
     {capture assign=imageUrl}{$data->imageUrl}{/capture}
 {if empty($imageUrl)}{capture assign=imageUrl}{$data->productagregat->imageUrl}{/capture}{/if}
@@ -12,21 +17,33 @@
     </div>
 {/if}
 <h1 class="name">{$data->name}</h1>
-{foreach from=$data->productagregat->products item=item key=key}
-    <span class="sizeChangeButton">
-        <a href="{zurl controller=product action=index id=$item->id}" title="{$data->name} {$item->getSizeString()}">
-            {$item->getSizeString()}        
-        </a>
-    </span>
-{/foreach}
+<p>
+    {if !empty($data->productagregat->products)}
+        {foreach from=$data->productagregat->products item=product key=key}
+
+            <a class="small {if $product->id == $data->id}black{else}white nice{/if} button radius{if $product->id == $data->id} disabled{/if}" href="{if $product->id == $data->id}#{else}{zurl controller=product action=index id=$product->id}" title="{$productagregat->name}{/if}">
+                {$product->getSizeString()}
+            </a>&nbsp;
+
+        {/foreach}
+    {/if}
+    <br/>
+</p>
 <p class="description">{$data->description}</p>
-{capture assign=ingredients}{$data->productagregat->ingredients}{/capture}
+{assign var=agregat value=$data->productagregat}
+{assign var=ingredients value=$agregat->getIngredients()}
 {if !empty($ingredients)}
     <h2 class="subtitle">Skład: </h2>
     <p class="ingredients">{$ingredients}</p>
 {/if}
 
-<div class="promotionsList">
+<div class="alert-box cityChoser">
+    <span class="citychooserInfo">Wpisz interesujące Cię miasto:</span>
+    {$form1}
+    <span class="small black button radius" id="showPromotions">Pokaż Promocje</span>
+</div>
+
+<div class="promotionsList" id="promotionsList">
     <div id="accordion">
         <h3>Aktualne promocje</h3>
         <div>
@@ -62,12 +79,44 @@
 {/if}
 {literal}
     <script>
-            $(document).ready(function() {
-                    jQuery( "#accordion" ).accordion();
+            getOffers = function(cid){
+             $.get('{/literal}{zurl controller=promotion action=ajaxlist product=$data->id}{literal}/city/'+cid, function(data) {
+                       $('#promotionsList').html(data);
+                       $.jStorage.set('cityId', cityId);
+                 });
+             }
+                 
+             setSessionCity = function(cityId){
+                 $.get('{/literal}{zurl controller=city action=savecity}{literal}/cityId/'+cityId, function(data) {
+                 });
+             }
+
+
+             $(document).ready(function(){
+                 cityId = $.jStorage.get('cityId', '');
+                     jQuery( "#accordion" ).accordion();
+                 $('select#cities').select_autocomplete();
+                 $('#cities-element input').addClass('input-text');
+                 
+                 $('#showPromotions').click(function(){
+                    cityId =  $('#cities :selected').val();
+                    setSessionCity(cityId);
+                    getOffers(cityId);
+                 });
+                 $('.ac_input.input-text').keypress(function(e){
+                      if(e.keyCode == 13){
+                          e.preventDefault();
+                          cityId =  $('#cities :selected').val();
+                          setSessionCity(cityId);
+                          getOffers(cityId);
+                       }
+                  });
+                 
             });
     </script>
 {/literal}
 </div>
+{include file='file:modules/cityform.tpl' form=$form2}
 
 
 

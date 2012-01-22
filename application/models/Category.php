@@ -16,32 +16,45 @@ class Application_Model_Category{
             return $categories;
         }
         
+        function getMainCategories(){
+            $query = $this->em->createQueryBuilder() 
+                    ->select('c')
+                    ->from('ZC\Entity\Category', 'c')
+                    ->where('c.parent IS NULL')
+                    ->getQuery();
+            //var_dump($query->getSql());
+            try {
+                $categories = $query->getResult();
+                return $categories;
+            } catch (Exception $e) {
+                return null;
+            }
+        }
+        
         /**
          * TODO
          * @param type $category
          * @param type $productAgregats 
          */
-        function addCategory($category, $productAgregats){          
-//            if(!empty($product['name']) && !empty($product['sizeNetto'])){
-//                $p = new ZC\Entity\Product();
-//                $p->name = $product['name'];
-//                $p->description = $product['description'];
-//                $p->sizeNetto = $product['sizeNetto'];
-//                $p->sizeBrutto = $product['sizeBrutto'];
-//                $p->sizeUnit = $product['sizeUnit'];
-//                $p->imageUrl = $product['imageUrl'];
-//                
-//                if(!empty($product['productAgregat']) && !empty($productAgregats)){
-//                    foreach($productAgregats as $key=>$item){
-//                        if($item->id == $product['productAgregat']){
-//                            $p->productagregat = $productAgregats[$key];                         
-//                        }
-//                    }
-//                }
-//                
-//                $this->em->persist($p);
-//                $this->em->flush();
-//            }
+        function addCategory($category, $categories){   
+            if(!empty($category['name'])){
+                $p = new ZC\Entity\Category();
+                $p->name = $category['name'];                
+                if(!empty($category['parent']) && $category['parent']>0 && !empty($categories)){
+                    foreach($categories as $key=>$item){
+                        if($item->id == $category['parent']){
+                            $p->parent = $categories[$key];       
+                            $p->level = $item->level + 1;
+                        }
+                    }
+                    
+                } else{
+                    $p->level = 0;
+                }
+                
+                $this->em->persist($p);
+                $this->em->flush();
+            }
             
         }
         

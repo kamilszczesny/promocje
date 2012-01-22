@@ -23,7 +23,7 @@ class Form_ShopAdd extends Zend_Form {
         foreach ($categories as $key => $cat) {
             $category->addMultiOption($cat->id, $cat->name);
         }
-        $category->setValue();
+        $category->setValue('');
 
         $description = new Zend_Form_Element_Textarea('description');
         $description->setLabel('opis produktu');

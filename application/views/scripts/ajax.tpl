@@ -1,0 +1,1 @@
+{$_view->layout()->content}

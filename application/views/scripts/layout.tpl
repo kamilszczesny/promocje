@@ -2,7 +2,7 @@
 <html lang="pl" xml:lang="pl">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>My Weblog</title>
+        {$_view->headTitle()} 
 
         <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -10,7 +10,6 @@
         {$_view->headLink()}
         {*$_view->jQuery()->enable()*}     
         {$_view->headScript()} 
-        {$_view->headTitle()} 
     </head>
     <body>
 
@@ -20,12 +19,15 @@
                 <div class="row display">
                     <div class="twelwe phone-eight centered columns">
                         <header>
+                            <div class="overMenu"><img src="{$_view->baseUrl()}/images/napromocji.png" alt="NaPromocji.pl" id="logo"/></div>
                             <nav>
                                 <div class="navElement first active"><a href="{zurl controller=index action=index}" title="Start">Start</a></div>
+                                {*
                                 <div class="navElement"><a href="{zurl controller=shop action=viewall}" title="Sklepy">Sklepy</a></div>
                                 <div class="navElement"><a href="{zurl controller=offer action=viewactual}" title="aktualne gazetki">Aktualne gazetki</a></div>
                                 <div class="navElement"><a href="{zurl controller=product action=viewall}" title="Produkty">Produkty</a></div>
                                 <div class="navElement"><a href="{zurl controller=offer action=viewpopular}" title="Polecane oferty">Polecane oferty</a></div>
+                                *}
                             </nav>
                             {if !empty($displaySgTop)}
 
@@ -45,6 +47,6 @@
         <footer>
 
         </footer>
-
+        
     </body>
 </html>

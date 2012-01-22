@@ -1,0 +1,1 @@
+{include file=$smarty.const.APPLICATION_PATH|cat:'\views\scripts\modules\offersInShop.tpl' currentOffers=$currentOffers futureOffers=$futureOffers}

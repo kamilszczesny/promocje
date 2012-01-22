@@ -135,12 +135,12 @@
 	-------------------------------------------------- */
 	h1, h2, h3, h4, h5, h6 { color: #181818; font-weight: bold; line-height: 1.25 }
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; }
-	h1 { font-size: 46px; font-size: 4.6rem; margin-bottom: 12px;}
-	h2 { font-size: 35px; font-size: 3.5rem; margin-bottom: 9px; }
-	h3 { font-size: 25px; font-size: 2.5rem; margin-bottom: 9px; }
-	h4 { font-size: 21px; font-size: 2.1rem; margin-bottom: 3px; }
-	h5 { font-size: 18px; font-size: 1.8rem; font-weight: normal; margin-bottom: 3px;  }
-	h6 { font-size: 15px; font-size: 1.5rem; font-weight: normal; }
+	h1 { font-size: 40px; font-size: 4.0rem; margin-bottom: 20px;}
+	h2 { font-size: 26px; font-size: 2.6rem; margin-bottom: 9px; }
+	h3 { font-size: 20px; font-size: 2.0rem; margin-bottom: 9px; }
+	h4 { font-size: 17px; font-size: 1.7rem; margin-bottom: 3px; }
+	h5 { font-size: 13px; font-size: 1.3rem; font-weight: normal; margin-bottom: 3px;  }
+	h6 { font-size: 11px; font-size: 1.1rem; font-weight: normal; }
 
 	.subheader { color: #777; font-weight: 300; margin-bottom: 24px; }
 
@@ -213,7 +213,7 @@
 	
 	.row .one.columns { width: 4.3%; }
 	.row .two.columns { width: 13%; }
-	.row .three.columns { width: 21.68%; }
+	.row .three.columns { width: 21.4%; }
 	.row .four.columns { width: 30.4%; }
 	.row .five.columns { width: 39.1%; }
 	.row .six.columns { width: 47.8%; }

@@ -53,10 +53,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 Zend_Controller_Action_HelperBroker::addHelper($viewRender);
          
          //ustawianie ZendX_jQuery
-         $view->addHelperPath('ZendX/jQuery/View/Helper','ZendX_Jquery_View_Helper');
+         //$view->addHelperPath('ZendX/jQuery/View/Helper','ZendX_Jquery_View_Helper');
          $view->headTitle()->setSeparator(' - ');
-         $view->headTitle('Promoland.pl');
-         ZendX_jQuery::enableView($view);
+         $view->headTitle('NaPromocji.pl');
 	 return $view;
 }
 
@@ -84,7 +83,7 @@ private function registerAutoloaders(array $config = array())
         require_once $doctrineIncludePath . '/Common/ClassLoader.php';
         $autoloader->registerNamespace('Upload_');
         $autoloader->registerNamespace('wi_');
-        $autoloader->registerNamespace('ZendX_');
+        $autoloader->registerNamespace('Form_');
 
         //$test = \Wideimage\wi_WideImage::
         $symfonyAutoloader = new \Doctrine\Common\ClassLoader('Symfony');

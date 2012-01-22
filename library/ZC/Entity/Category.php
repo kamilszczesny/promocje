@@ -22,6 +22,13 @@ class Category {
 	 * @var string
 	 */
 	private $ip;
+        
+        /**
+	 * 
+	 * @Column(type="integer", nullable="false")
+	 * @var integer
+	 */
+	private $level;
 	
         /**
 	 * 
@@ -48,15 +55,42 @@ class Category {
          */
         private $parent;
         
-        
         /**
          *
-         * @var type 
-         * @OneToMany(targetEntity="ProductAgregat",mappedBy="category", cascade={"persist","remove"})
+         * @ManyToMany(targetEntity="ProductAgregat", mappedBy="categories")
          */
         private $productagregats;
         
-	
+	public function getParent(){
+            if(!empty($this->parent)) return $this->parent;
+            else return null;
+        }
+        
+        public function getChildren(){
+            if(!empty($this->children)) return $this->children->toArray();
+            else return null;
+        }
+        
+        public function getSiblings(){
+            $siblings = null;
+            if(!empty($this->parent)){
+                $siblings = $this->parent->getChildren();
+            }
+            return $siblings;
+        }
+        
+        public function getCategoryTree(){
+            $ret = array();
+            $ret[] = $this;
+            $parent = $this->getParent();
+            while(!empty($parent)){
+                $ret[] = $parent;
+                $parent = $parent->getParent();
+            }
+            $ret = array_reverse($ret);
+            return $ret;
+        }
+        
 	public function __get($property){
 		return $this->$property;
 	}

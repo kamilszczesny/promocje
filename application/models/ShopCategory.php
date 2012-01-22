@@ -13,7 +13,7 @@ class Application_Model_ShopCategory{
                               ->getResult();
             return $categories;
         }
-        function getById($id){
+        function getCategoryById($id){
             $category = $this->em->find("ZC\Entity\ShopCategory", (int)$id);
             return $category;
         }

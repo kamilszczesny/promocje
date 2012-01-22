@@ -27,6 +27,18 @@ class ZCEntityProductAgregatProxy extends \ZC\Entity\ProductAgregat implements \
     }
 
     
+    public function getIngredients()
+    {
+        $this->_load();
+        return parent::getIngredients();
+    }
+
+    public function getCategories()
+    {
+        $this->_load();
+        return parent::getCategories();
+    }
+
     public function __get($property)
     {
         $this->_load();
@@ -42,6 +54,6 @@ class ZCEntityProductAgregatProxy extends \ZC\Entity\ProductAgregat implements \
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'description', 'ingredients', 'imageUrl', 'image', 'category', 'products');
+        return array('__isInitialized__', 'id', 'name', 'description', 'ingredients', 'imageUrl', 'image', 'categories', 'products');
     }
 }

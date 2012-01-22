@@ -11,11 +11,20 @@ class Application_Model_Shop{
         function getAll(){
             $shops = $this->em->createQuery('SELECT s FROM ZC\Entity\Shop s ORDER BY s.name ASC')
                               ->getResult();
+       
             return $shops;
         }
         function getShopById($id){
-            $shop = $this->em->find("ZC\Entity\Shop", (int)$id);
-            return $shop;
+            $query = $this->em->createQueryBuilder() 
+                    ->select('s,o')
+                    ->from('ZC\Entity\Shop', 's')
+                    ->where('s.id = :id')
+                    ->leftJoin('s.offers', 'o', 'WITH', 'o.dateTo >= CURRENT_DATE()')
+                    ->getQuery();
+            //echo $query->getSQL();
+            $shop = $query->setParameter('id',$id)->getResult();
+            return $shop[0];
+            
         }
         function addShop($shopData, $categories, $cities){
             if(!empty($shopData['name'])){

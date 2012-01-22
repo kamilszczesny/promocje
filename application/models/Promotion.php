@@ -61,5 +61,53 @@ class Application_Model_Promotion{
                 return null;
             }
         }
+        
+        function getPromotionsByProductIdAndCityId($productId, $cityId){
+            $start = microtime(true);
+            $query = $this->em->createQueryBuilder() 
+                    ->select('p,o')
+                    ->from('ZC\Entity\Promotion', 'p')
+                    //->where('o.dateTo >= CURRENT_DATE()')
+                    ->join('p.product', 'r', 'WITH', 'r.id = :productId')
+                    ->join('p.offer', 'o', 'WITH',  'o.dateTo >= CURRENT_DATE()') //WITH c.id = :cityId
+                    ->join('o.cities', 'c', 'WITH', 'c.id = :cityId')
+                    ->getQuery();
+            //echo($query->getSQL());
+            $promotions = $query->setParameter('productId',$productId)->setParameter('cityId',$cityId)->getResult();
+//            echo('<pre>');
+//            print_r($promotions);
+//            echo('</pre>');
+            $result = array('current'=>array(),
+                            'future'=>array());
+            foreach($promotions as $key=>$promotion){
+                
+                if($promotion->isCurrent()) $result['current'][] = $promotion;
+                else if($promotion->isFuture()) $result['future'][] = $promotion;
+            }
+            $stop = microtime(true);
+            return $result;
+        }
+        
+        function getPopularPromotionsByCityId($cityId){
+            $start = microtime(true);
+            $query = $this->em->createQueryBuilder() 
+                    ->select('p,o,r')
+                    ->from('ZC\Entity\Promotion', 'p')
+                    ->join('p.offer', 'o', 'WITH',  'o.dateTo >= CURRENT_DATE() AND o.dateFrom <= CURRENT_DATE()')
+                    ->join('p.product', 'r')
+                    ->orderBy('p.weight', 'DESC')
+                    ->setMaxResults(6);
+                    
+            if($cityId>0){
+                $query->join('o.cities', 'c', 'WITH', 'c.id = :cityId')
+                      ->setParameter('cityId', $cityId);;
+            }
+            $query = $query->getQuery();
+            //var_dump($query->getSQL());
+            //var_dump($cityId);
+            $promotions = $query->getResult();
+            $stop = microtime(true);
+            return $promotions;
+        }
 }
 ?>

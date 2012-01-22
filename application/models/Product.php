@@ -57,5 +57,10 @@ class Application_Model_Product{
                 return null;
             }
         }
+        
+        //TODO getProductByIdAndCity
+        function getProductByIdAndCity($id, $cityId){
+
+        }
 }
 ?>

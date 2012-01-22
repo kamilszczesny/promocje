@@ -86,6 +86,7 @@ class OfferController extends Zend_Controller_Action {
                     if ($formularz->isValid($formData)) {
                         $this->offerModel->saveOffer($formData, $offer, $shops, $cities);
                         $this->view->message = 'Zmodyfikowano gazetkę';
+                        $this->view->form = $formularz;
                     } else {
                         $this->view->form = $formularz;
                         $this->view->message = 'Wystąpił błąd dodawania nowej gazetki';
@@ -100,6 +101,15 @@ class OfferController extends Zend_Controller_Action {
             }
         }
     }
+    
+    public function ajaxlistAction(){
+        $shopId = $this->_getParam('shop', null);
+        $cityId = $this->_getParam('city', null);
+        $offers = $this->offerModel->getOffersByShopIdAndCityId($shopId, $cityId);
+        $layout = $this->_helper->layout();
+        $layout->setLayout('ajax');
+        $this->view->currentOffers = $offers['current'];
+        $this->view->futureOffers = $offers['future'];
+    }
 
 }
-

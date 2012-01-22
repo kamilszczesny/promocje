@@ -50,6 +50,13 @@ class Promotion {
         private $returnPrice;
         
         
+         /**
+	 * 
+	 * @Column(name="weight", type="integer")
+	 */
+	private $weight;
+        
+        
         /**
          *
          * @Column(type="string", length=250)

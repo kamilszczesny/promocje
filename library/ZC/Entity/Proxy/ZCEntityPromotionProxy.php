@@ -84,6 +84,6 @@ class ZCEntityPromotionProxy extends \ZC\Entity\Promotion implements \Doctrine\O
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'product', 'offer', 'price', 'returnPrice', 'promotionComment');
+        return array('__isInitialized__', 'id', 'product', 'offer', 'price', 'returnPrice', 'weight', 'promotionComment');
     }
 }

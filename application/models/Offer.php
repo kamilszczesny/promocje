@@ -12,9 +12,69 @@ class Application_Model_Offer{
         
         function getAll(){
             $offers = $this->em->createQuery('SELECT o FROM ZC\Entity\Offer o')
-                         ->getResult();
+                         ->getResult('SELECT o FROM ZC\Entity\Offer o');
             return $offers;
         }
+        
+        function getCurrentAndFuture(){
+            $queryBuilder = $this->em->createQueryBuilder();
+            $queryBuilder->add('select', 'o')
+                    ->add('from', 'ZC\Entity\Offer o')
+                    ->add('where', 'o.dateTo >= :date')
+                    ->add('orderBy', 'u.dateFrom ASC')
+                    ->setParameter('date', date("Y-m-d"));
+
+            $query = $queryBuilder->getQuery();
+            try {
+                $user = $query->getSingleResult();
+                $un = $user->username;
+                return $user;
+            } catch (Exception $e) {
+                return null;
+            }
+        }
+        
+        function getNewestOffers($cityId){
+            $query = $this->em->createQueryBuilder() 
+                    ->select('o,c')
+                    ->from('ZC\Entity\Offer', 'o')
+                    ->where('o.dateTo >= CURRENT_DATE()')
+                    ->andWhere('o.dateFrom <= CURRENT_DATE()')
+                    ->join('o.cities', 'c', 'WITH', 'c.id = :cityId')
+                    ->addOrderBy('o.dateFrom','DESC')
+                    ->setMaxResults(4)
+                    ->setParameter('cityId', $cityId)
+                    ->getQuery();
+            //echo($query->getSQL());
+            
+            try {
+                $offers = $query->getResult();
+
+                return $offers;
+            } catch (Exception $e) {
+                return null;
+            }
+        }
+        
+        function getOffersByShopIdAndCityId($shopId, $cityId){
+            $query = $this->em->createQueryBuilder() 
+                    ->select('o,c,s')
+                    ->from('ZC\Entity\Offer', 'o')
+                    ->where('o.dateTo >= CURRENT_DATE()')
+                    ->join('o.shop', 's', 'WITH', 's.id = :shopId')
+                    ->join('o.cities', 'c', 'WITH', 'c.id = :cityId')
+                    ->getQuery();
+            
+            $offers = $query->setParameter('shopId',$shopId)->setParameter('cityId',$cityId)->getResult();
+            $result = array('current'=>array(),
+                            'future'=>array());
+            foreach($offers as $key=>$offer){
+                if($offer->isCurrent()) $result['current'][] = $offer;
+                else if($offer->isFuture()) $result['future'][] = $offer;
+            }
+            return $result;
+        }
+        
         function addOffer($offer, $shops, $cities){         
             if(!empty($offer['name']) && !empty($offer['dateFrom']) && !empty($offer['dateTo'])){
                 $o = new ZC\Entity\offer();

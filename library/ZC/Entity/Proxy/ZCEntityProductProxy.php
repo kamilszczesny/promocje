@@ -51,6 +51,12 @@ class ZCEntityProductProxy extends \ZC\Entity\Product implements \Doctrine\ORM\P
         return parent::getFuturePromotions();
     }
 
+    public function setPromotions($p)
+    {
+        $this->_load();
+        return parent::setPromotions($p);
+    }
+
     public function getSmallestCurrentPrice()
     {
         $this->_load();
@@ -61,6 +67,18 @@ class ZCEntityProductProxy extends \ZC\Entity\Product implements \Doctrine\ORM\P
     {
         $this->_load();
         return parent::getPromotions();
+    }
+
+    public function getMainCategory()
+    {
+        $this->_load();
+        return parent::getMainCategory();
+    }
+
+    public function getCategories()
+    {
+        $this->_load();
+        return parent::getCategories();
     }
 
     public function __get($property)

@@ -20,11 +20,35 @@ class ShopCategory {
         private $name;
         
         /**
+	 * 
+	 * @Column(type="string", nullable="false", length=200)
+	 * @var string
+	 */
+	private $ip;
+        
+        /**
          *
          * @var type 
          * @OneToMany(targetEntity="Shop",mappedBy="category")
          */
         private $shops;
+        
+        /**
+         *
+         * @var type 
+         * @OneToMany(targetEntity="ShopCategory",mappedBy="parent", cascade={"persist","remove"})
+         */
+        private $children;
+        
+        /**
+         *
+         * @var Category
+         * @ManyToOne(targetEntity="ShopCategory")
+         * @JoinColumns({
+         *  @JoinColumn(name="category_id", referencedColumnName="id")
+         * })
+         */
+        private $parent;
         
 	
 	public function __get($property){

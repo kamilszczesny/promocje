@@ -27,6 +27,12 @@ class ZCEntityCategoryProxy extends \ZC\Entity\Category implements \Doctrine\ORM
     }
 
     
+    public function getParent()
+    {
+        $this->_load();
+        return parent::getParent();
+    }
+
     public function __get($property)
     {
         $this->_load();
@@ -42,6 +48,6 @@ class ZCEntityCategoryProxy extends \ZC\Entity\Category implements \Doctrine\ORM
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'ip', 'name', 'children', 'parent', 'productagregats');
+        return array('__isInitialized__', 'id', 'ip', 'level', 'name', 'children', 'parent', 'productagregats');
     }
 }

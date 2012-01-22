@@ -62,9 +62,51 @@ class Shop {
          */
         private $category;
         
+        private $sortedOffers;
+        private $pastOffers;
+        private $currentOffers;
+        private $futureOffers;
+        
         public function getOffers(){
             return $this->offers;
         }
+        
+        public function getPastOffers(){
+            if(!$this->sortedOffers){
+                $this->sortOffers();
+            }
+            return $this->pastOffers;
+        }
+        
+        public function getCurrentOffers(){
+            if(!$this->sortedOffers){
+                $this->sortOffers();
+            }
+            return $this->currentOffers;
+        }
+        
+        public function getFutureOffers(){
+            if(!$this->sortedOffers){
+                $this->sortOffers();
+            }
+            return $this->futureOffers;
+        }
+        
+        private function sortOffers(){
+            $offers = $this->offers;
+            if(!empty($offers)){
+                foreach($offers as $key=>$p){
+                    if($p->isCurrent()){
+                        $this->currentOffers[] = $this->offers[$key];
+                    } else if($p->isPast()){
+                        $this->pastOffers[] = $this->offers[$key];
+                    } else if($p->isFuture()){
+                        $this->futureOffers[] = $this->offers[$key];
+                    }
+                }
+                $this->sortedOffers = true;
+            }
+        }       
 	
 	public function __get($property){
 		return $this->$property;
